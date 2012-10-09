@@ -1,4 +1,11 @@
 (function() {
+  /*
+    Backbone.PluginView
+    https://github.com/meleyal/backbone.pluginview
+  
+    Copyright (c) 2012 William Meleyal
+    MIT License
+  */
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -20,28 +27,33 @@
         if (options == null) {
           options = {};
         }
-        return this.each(__bind(function(idx, el) {
-          options = _.extend(options, {
-            el: el,
-            namespace: namespace
-          });
-          return self.install(options);
-        }, this));
+        return this.each(function(idx, el) {
+          return self.install(el, options, namespace);
+        });
       };
     };
-    PluginView.install = function(options) {
-      var namespace, uninstallEvent, view;
+    PluginView.install = function(el, options, namespace) {
+      var $el, data, uninstallEvent, view;
       uninstallEvent = Backbone.PluginView.uninstallEvent;
-      namespace = options.namespace;
-      view = new this(options);
-      if (uninstallEvent) {
-        return $(document).on("" + uninstallEvent + "." + namespace, view.uninstall);
+      $el = $(el);
+      data = $el.data(namespace);
+      if (data == null) {
+        options = _.extend(options, {
+          el: el,
+          namespace: namespace
+        });
+        view = new this(options);
+        $el.data(namespace, view);
+        if (uninstallEvent) {
+          return $(document).on("" + uninstallEvent + "." + namespace, view.uninstall);
+        }
       }
     };
     PluginView.prototype.uninstall = function(e) {
-      var eventNamespace;
-      console.log('PluginView#uninstall', this.options.namespace);
-      eventNamespace = "." + this.options.namespace;
+      var eventNamespace, namespace;
+      namespace = this.options.namespace;
+      eventNamespace = "." + namespace;
+      this.$el.removeData(namespace);
       this.undelegateEvents();
       this.$el.off(eventNamespace);
       $(window).off(eventNamespace);

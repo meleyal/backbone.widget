@@ -1,6 +1,6 @@
 ###
   Backbone.PluginView
-  https://github.com/meleyal/backbone.pluginView
+  https://github.com/meleyal/backbone.pluginview
 
   Copyright (c) 2012 William Meleyal
   MIT License
