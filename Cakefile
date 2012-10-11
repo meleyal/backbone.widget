@@ -1,16 +1,15 @@
-{print} = require 'util'
-{spawn} = require 'child_process'
+{exec} = require 'child_process'
 
-spawn_coffee = ->
-  coffee = spawn 'coffee', Array.prototype.slice.call(arguments, 0)
-  coffee.stderr.on 'data', (data) ->
-    process.stderr.write data.toString()
-  coffee.stdout.on 'data', (data) ->
-    print data.toString()
+run = (cmd) ->
+  cmd = exec cmd
+  cmd.stderr.on 'data', (data) -> console.log data
+  cmd.stdout.on 'data', (data) -> console.log data
 
-task 'build', 'Build lib/ from src/', ->
-  spawn_coffee  '--compile', '--output', 'lib', 'src'
+task 'build', 'Build from src', ->
+  run 'coffee --compile backbone.pluginView.coffee'
 
-task 'watch', 'Watch src/ for changes', ->
-  spawn_coffee '--watch', '--compile', '--output', 'lib/', 'src/'
-  #spawn_coffee '--watch', '-Rcompile', 'test/'
+task 'watch', 'Watch src for changes', ->
+  run 'coffee --watch --compile backbone.pluginView.coffee'
+
+task 'test', 'Run jasmine specs', ->
+  run 'jasmine-node --coffee test'
