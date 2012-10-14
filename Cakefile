@@ -10,6 +10,3 @@ task 'build', 'Build from src', ->
 
 task 'watch', 'Watch src for changes', ->
   run 'coffee --watch --compile backbone.pluginView.coffee'
-
-task 'test', 'Run jasmine specs', ->
-  run 'jasmine-node --coffee test'
