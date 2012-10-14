@@ -9,7 +9,6 @@
 class Backbone.PluginView extends Backbone.View
 
   @exportPlugin: (namespace) ->
-    #console.log 'exportPlugin', namespace
     self = this
     $.fn[namespace] = (options = {}) ->
       @each (idx, el) -> self.install el, options, namespace
@@ -19,7 +18,6 @@ class Backbone.PluginView extends Backbone.View
     $el = $(el)
     data = $el.data namespace
     unless data?
-      #console.log 'install', namespace
       options = _.extend options, { el, namespace }
       view = new this(options)
       $el.data(namespace, view)
@@ -28,11 +26,6 @@ class Backbone.PluginView extends Backbone.View
 
   uninstall: (e) =>
     { namespace } = @options
-    #console.log 'uninstall', namespace
-    eventNamespace = ".#{namespace}"
-    @$el.removeData(namespace)
     @undelegateEvents()
-    # TODO: combine into single off() call?
-    @$el.off eventNamespace
-    $(window).off eventNamespace
-    $(document).off eventNamespace
+    $(document).off ".#{namespace}"
+    @$el.removeData(namespace)

@@ -50,14 +50,11 @@
       }
     };
     PluginView.prototype.uninstall = function(e) {
-      var eventNamespace, namespace;
+      var namespace;
       namespace = this.options.namespace;
-      eventNamespace = "." + namespace;
-      this.$el.removeData(namespace);
       this.undelegateEvents();
-      this.$el.off(eventNamespace);
-      $(window).off(eventNamespace);
-      return $(document).off(eventNamespace);
+      $(document).off("." + namespace);
+      return this.$el.removeData(namespace);
     };
     return PluginView;
   })();
