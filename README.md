@@ -1,9 +1,9 @@
-Backbone.PluginView
-===================
+Backbone.Widget
+===============
 
-Make jQuery plugins from your Backbone Views.
+Make jQuery plugins/widgets from your Backbone Views.
 
-`Backbone.PluginView` extends `Backbone.View` with some simple helpers for creating jQuery plugins (`$.fn`).
+`Backbone.Widget` extends `Backbone.View` with some simple helpers for creating jQuery plugins/widgets (`$.fn`).
 
 This enables creating `Backbone.View` instances with familiar syntax:
 
@@ -18,42 +18,56 @@ Usage
 ### JavaScript ###
 
 ```javascript
-// extend Backbone.PluginView
-MyView = Backbone.PluginView.extend({
+// extend Backbone.Widget
+MyView = Backbone.Widget.extend({
   initialize: function(options) {
     console.log(this.el, options);
   }
 });
 
-// export as plugin
-MyView.exportPlugin('myView');
+// export as widget
+MyView.exportWidget('myView');
 
 // call on element
-$(document).ready(function(){
-  $('.example').myView([options]);
-});
+$('.example').myView([options]);
 ```
 
 ### CoffeeScript ###
 
 ```coffeescript
-# extend Backbone.PluginView
-class MyView extends Backbone.PluginView
+# extend Backbone.Widget
+class MyView extends Backbone.Widget
 
-  # export as plugin
-  @exportPlugin 'myView'
+  # export as widget
+  @exportWidget 'myView'
 
   initialize: (options) ->
     console.log @el, options
 
 # call on element
-$(document).ready ->
-  $('.example').myView([options])
+$('.example').myView([options])
 ```
 
 
 Tricks
 ------
+
+### Calling view methods ###
+
+View methods can be called directly on the element
+
+```javascript
+$('.example').myView('remove')
+```
+
+### View instance ###
+
+A reference to the view instance is stored in the element's `$.data`.
+
+```javascript
+view = $('.example').data('myView');
+console.log(view.cid); // view0
+```
 
 ### Namespace ###
 
@@ -68,20 +82,11 @@ initialize: function(options) {
 ...
 ```
 
-### View instance ###
+### Auto remove ###
 
-A reference to the view instance is stored in the element's `$.data`.
-
-```javascript
-view = $('.example').data('myView');
-console.log(view.cid); // view0
-```
-
-### Auto uninstall ###
-
-`PluginView`'s can optionally "uninstall" on a given event.
+`Widgets`'s can optionally `remove` themselves on a given event.
 This can be useful with [pjax] / [turbolinks]
-where you need to routinely unbind views between "page loads".
+where you need to routinely cleanup views between "page loads".
 See the [wiki page][auto-install-wiki] for more details.
 
 [jquery-events]: http://docs.jquery.com/Namespaced_Events

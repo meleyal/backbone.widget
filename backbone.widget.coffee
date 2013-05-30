@@ -1,20 +1,20 @@
 ###
-  Backbone.PluginView
-  https://github.com/meleyal/backbone.pluginview
+  Backbone.Widget
+  https://github.com/meleyal/backbone.widget
 
-  Copyright (c) 2012 William Meleyal
+  Copyright (c) 2013 William Meleyal
   MIT License
 ###
 
-class Backbone.PluginView extends Backbone.View
+class Backbone.Widget extends Backbone.View
 
-  @exportPlugin: (namespace) ->
+  @exportWidget: (namespace) ->
     self = this
     $.fn[namespace] = (options = {}) ->
       @each (idx, el) -> self.install el, options, namespace
 
   @install: (el, options, namespace) ->
-    { uninstallEvent } = Backbone.PluginView
+    { uninstallEvent } = Backbone.Widget
     $el = $(el)
     data = $el.data namespace
     unless data?

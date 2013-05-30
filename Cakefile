@@ -6,7 +6,7 @@ run = (cmd) ->
   cmd.stdout.on 'data', (data) -> console.log data
 
 task 'build', 'Build from src', ->
-  run 'coffee --compile backbone.pluginView.coffee'
+  run 'coffee --compile backbone.widget.coffee'
 
 task 'watch', 'Watch src for changes', ->
-  run 'coffee --watch --compile backbone.pluginView.coffee'
+  run 'coffee --watch --compile backbone.widget.coffee'
