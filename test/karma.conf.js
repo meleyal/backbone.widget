@@ -16,6 +16,7 @@ files = [
   'test/vendor/backbone.js',
   'test/vendor/sinon.js',
 
+  'test/helpers.coffee',
   'backbone.widget.coffee',
   'test/tests.coffee'
 ];
