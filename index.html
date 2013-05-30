@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Backbone.Widget by meleyal</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Backbone.Widget</h1>
+        <p>Make jQuery widgets from your Backbone Views.</p>
+
+        <p class="view"><a href="https://github.com/meleyal/backbone.widget">View the Project on GitHub <small>meleyal/backbone.widget</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/meleyal/backbone.widget/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/meleyal/backbone.widget/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/meleyal/backbone.widget">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><code>Backbone.Widget</code> extends <code>Backbone.View</code> with some simple helpers for creating jQuery widgets/plugins (<code>$.fn</code>).</p>
+
+<p>This enables creating <code>Backbone.View</code> instances with jQuery syntax:</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'.example'</span><span class="p">).</span><span class="nx">myView</span><span class="p">([</span><span class="nx">options</span><span class="p">]);</span>
+</pre></div>
+
+<h2>
+<a name="why" class="anchor" href="#why"><span class="octicon octicon-link"></span></a>Why?</h2>
+
+<p>At the code level <code>Backbone.View</code> offers a nice way to structure your jQuery widget/plugin code.
+<code>Backbone.Widget</code> just provides some minimal glue code to make this easy.</p>
+
+<p>At the application / architecture level, the <a href="http://blog.pamelafox.org/2013/05/frontend-architectures-server-side-html.html">JS Widgets</a> approach can offer a hybrid / DOM-centric alternative to single page apps; with static HTML from the server providing the foundation for multiple mini-applications (widgets).</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="javascript" class="anchor" href="#javascript"><span class="octicon octicon-link"></span></a>JavaScript</h3>
+
+<div class="highlight"><pre><span class="c1">// extend Backbone.Widget</span>
+<span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// export as widget</span>
+<span class="nx">MyView</span><span class="p">.</span><span class="nx">exportWidget</span><span class="p">(</span><span class="s1">'myView'</span><span class="p">);</span>
+
+<span class="c1">// call on element</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'.example'</span><span class="p">).</span><span class="nx">myView</span><span class="p">([</span><span class="nx">options</span><span class="p">]);</span>
+</pre></div>
+
+<h3>
+<a name="coffeescript" class="anchor" href="#coffeescript"><span class="octicon octicon-link"></span></a>CoffeeScript</h3>
+
+<div class="highlight"><pre><span class="c1"># extend Backbone.Widget</span>
+<span class="k">class</span> <span class="nx">MyView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Widget</span>
+
+  <span class="c1"># export as widget</span>
+  <span class="nx">@exportWidget</span> <span class="s">'myView'</span>
+
+  <span class="nv">initialize: </span><span class="nf">(options) -&gt;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">@el</span><span class="p">,</span> <span class="nx">options</span>
+
+<span class="c1"># call on element</span>
+<span class="nx">$</span><span class="p">(</span><span class="s">'.example'</span><span class="p">).</span><span class="nx">myView</span><span class="p">([</span><span class="nx">options</span><span class="p">])</span>
+</pre></div>
+
+<h2>
+<a name="tricks" class="anchor" href="#tricks"><span class="octicon octicon-link"></span></a>Tricks</h2>
+
+<h3>
+<a name="calling-view-methods" class="anchor" href="#calling-view-methods"><span class="octicon octicon-link"></span></a>Calling view methods</h3>
+
+<p>View methods can be called directly on the element</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'.example'</span><span class="p">).</span><span class="nx">myView</span><span class="p">(</span><span class="s1">'remove'</span><span class="p">)</span>
+</pre></div>
+
+<h3>
+<a name="view-instance" class="anchor" href="#view-instance"><span class="octicon octicon-link"></span></a>View instance</h3>
+
+<p>A reference to the view instance is stored in the element's <code>$.data</code>.</p>
+
+<div class="highlight"><pre><span class="nx">view</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'.example'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'myView'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">cid</span><span class="p">);</span> <span class="c1">// view0</span>
+</pre></div>
+
+<h3>
+<a name="namespace" class="anchor" href="#namespace"><span class="octicon octicon-link"></span></a>Namespace</h3>
+
+<p>The <code>namespace</code> option is passed to the view instance for convenience.
+This can be useful for e.g. <a href="http://docs.jquery.com/Namespaced_Events">namespacing events</a>.</p>
+
+<div class="highlight"><pre><span class="p">...</span>
+<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">namespace</span><span class="p">);</span> <span class="c1">// myView</span>
+<span class="p">}</span>
+<span class="p">...</span>
+</pre></div>
+
+<h3>
+<a name="auto-remove" class="anchor" href="#auto-remove"><span class="octicon octicon-link"></span></a>Auto remove</h3>
+
+<p><code>Widgets</code>'s can optionally <code>remove</code> themselves on a given event.
+This can be useful with <a href="https://github.com/defunkt/jquery-pjax">pjax</a> / <a href="https://github.com/rails/turbolinks">turbolinks</a>
+where you need to routinely cleanup views between "page loads".
+See the <a href="https://github.com/meleyal/backbone.pluginview/wiki/Auto-Remove">wiki page</a> for more details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/meleyal">meleyal</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
