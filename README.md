@@ -1,7 +1,7 @@
 Backbone.Widget
 ===============
 
-Make jQuery widgets from your Backbone Views.
+Create Backbone.Views via jQuery.
 
 `Backbone.Widget` extends `Backbone.View` with some simple helpers for creating jQuery widgets/plugins (`$.fn`).
 
