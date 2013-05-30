@@ -18,50 +18,51 @@
     __extends(Widget, _super);
 
     function Widget() {
-      this.uninstall = __bind(this.uninstall, this);      _ref = Widget.__super__.constructor.apply(this, arguments);
+      this.remove = __bind(this.remove, this);      _ref = Widget.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
     Widget.exportWidget = function(namespace) {
-      var self;
+      var klass;
 
-      self = this;
+      klass = this;
       return $.fn[namespace] = function(options) {
         if (options == null) {
           options = {};
         }
         return this.each(function(idx, el) {
-          return self.install(el, options, namespace);
+          return klass.install(el, options, namespace);
         });
       };
     };
 
     Widget.install = function(el, options, namespace) {
-      var $el, data, uninstallEvent, view;
+      var instance, klass;
 
-      uninstallEvent = Backbone.Widget.uninstallEvent;
-      $el = $(el);
-      data = $el.data(namespace);
-      if (data == null) {
+      klass = this;
+      if (instance = $(el).data(namespace)) {
+        if (options && typeof options === 'string') {
+          return instance[options].call(klass);
+        } else {
+          return instance;
+        }
+      } else {
         options = _.extend(options, {
           el: el,
           namespace: namespace
         });
-        view = new this(options);
-        $el.data(namespace, view);
-        if (uninstallEvent) {
-          return $(document).on("" + uninstallEvent + "." + namespace, view.uninstall);
+        instance = new klass(options);
+        $(el).data(namespace, instance);
+        this.removeEvent = Backbone.Widget.removeEvent;
+        if (this.removeEvent) {
+          return $(document).on(this.removeEvent, instance.remove);
         }
       }
     };
 
-    Widget.prototype.uninstall = function(e) {
-      var namespace;
-
-      namespace = this.options.namespace;
-      this.undelegateEvents();
-      $(document).off("." + namespace);
-      return this.$el.removeData(namespace);
+    Widget.prototype.remove = function() {
+      $(document).off(this.removeEvent, this.remove);
+      return Widget.__super__.remove.apply(this, arguments);
     };
 
     return Widget;
