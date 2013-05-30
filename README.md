@@ -5,7 +5,7 @@ Make jQuery plugins/widgets from your Backbone Views.
 
 `Backbone.Widget` extends `Backbone.View` with some simple helpers for creating jQuery plugins/widgets (`$.fn`).
 
-This enables creating `Backbone.View` instances with familiar syntax:
+This enables creating `Backbone.View` instances with jQuery syntax:
 
 ```javascript
 $('.example').myView([options]);
