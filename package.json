@@ -1,0 +1,29 @@
+{
+  "name": "backbone.widget",
+  "version": "0.9.0",
+  "description": "Make jQuery widgets from your Backbone Views",
+  "main": "backbone.widget.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "coffee --compile backbone.widget.coffee",
+    "test": "karma start test/karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/meleyal/backbone.widget.git"
+  },
+  "keywords": [
+    "backbone",
+    "jquery",
+    "widget",
+    "plugin"
+  ],
+  "author": "William Meleyal",
+  "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "1.6.2",
+    "karma": "0.8.1"
+  }
+}
