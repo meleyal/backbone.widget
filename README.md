@@ -101,4 +101,4 @@ See the [wiki page][auto-remove-wiki] for more details.
 [jquery-events]: http://docs.jquery.com/Namespaced_Events
 [pjax]: https://github.com/defunkt/jquery-pjax
 [turbolinks]: https://github.com/rails/turbolinks
-[auto-remove-wiki]: https://github.com/meleyal/backbone.pluginview/wiki/Auto-Uninstall
+[auto-remove-wiki]: https://github.com/meleyal/backbone.pluginview/wiki/Auto-Remove
